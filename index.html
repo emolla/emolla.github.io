@@ -307,6 +307,11 @@
     box-sizing: border-box;
   }
 
+  .date {
+    font-size: 0.4em;
+    color: gray;
+  }
+
   @media (min-width: 500px) {
     .categories {
       display: grid;
@@ -423,7 +428,11 @@
       const date = new Date();
       const hours = this._pad(date.getHours());
       const minutes = this._pad(date.getMinutes());
+      const day = this._pad(date.getDay())
+      const month = this._pad(date.getMonth() + 1)
+      const year = this._pad(date.getFullYear())
       this._el.innerHTML = hours + this._delimiter + minutes;
+      this._el.innerHTML += '<span class="date"> ' + day + '/' + month + '/' + year + '</span>'
     }
 
     _start() {
