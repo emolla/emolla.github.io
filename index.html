@@ -7,13 +7,14 @@
     // if none of the specified keys are matched, the '*' key is used
     commands: [
       [null, 'Google', '*', 'https://www.google.com', '/search?q={}', '#111'],
-      ['Search', 'Duckduckgo', 'd', 'https://duckduckgo.com/', '/search?q={}&ia=meanings', '#222'],
-      ['Work', 'GitHub', 'g', 'https://github.com/emolla', '/search?utf8=✓&q={}&type=', '#333'],
-      ['Work', 'Inbox', 'i', 'https://wwww.google.com', '/search/{}', '#4285f4'],
-      ['Look', 'BBCNews', 'b', 'https://bbc.co.uk/news', '/search?q={}', '#da552f'],
-      ['Lurk', 'Twitter', 't', 'https://twitter.com', '/search?q={}', '#1da1f2'],
-      ['Listen', 'Ivoox', 'x', 'https://ivoox.com', '/search?q={}', '#ff8800'],
-      ['Watch', 'Linkedin', 'l', 'https://www.linkedin.com', '/in/enrique-moll%C3%A1/', '#9cb443'],
+      ['Search', 'Duckduckgo', 's', 'https://duckduckgo.com/', '/search?q={}&ia=meanings', '#222'],
+      ['Developing', 'GitHub', 'g', 'https://github.com/emolla', '/search?utf8=✓&q={}&type=', '#333'],
+      ['Mail', 'Inbox', 'i', 'https://wwww.google.com', '/search/{}', '#4285f4'],
+      ['News', 'BBCNews', 'b', 'https://bbc.co.uk/news', '/search?q={}', '#da552f'],
+      ['Translator', 'Google translate', 't', 'https://translate.google.es', '/?um=1&ie=UTF-8&hl=es&client=tw-ob#en/es/{}', '#1da1f2'],
+      ['Translator', 'Linguee', 'tl', 'https://www.linguee.es', '/espanol-ingles/search?source=auto&query={}', '#1df1f2'],
+      ['Listen', 'Ivoox', 'x', 'https://ivoox.com', '/{}_sb.html', '#ff8800'],
+      ['Jobs', 'Linkedin', 'l', 'https://www.linkedin.com', '/in/enrique-moll%C3%A1/', '#9cb443'],
       ['Watch', 'YouTube', 'y', 'https://youtube.com/feed/subscriptions', '/results?search_query={}', '#cd201f'],
     ],
 
@@ -35,10 +36,10 @@
 
     // default search suggestions for the specified queries
     defaultSuggestions: {
-      'g': ['g/issues', 'g/pulls', 'gist.github.com', 'g/emolla', 'g/emolla'],
-      'l': ['l:electronic', 'l:chill', 'l:focus', 'l:sleep', 'l:ambient'],
-      'r': ['r/r/unixporn', 'r/r/startpages', 'r/r/webdev', 'r/r/technology', 'r/r/portland'],
-      's': ['s/you/likes', 's/discover/the-upload'],
+      'l': ['l/in/enrique-mollá/'],
+      'x': ['x:'],
+      't': ['t:'],
+      'tl': ['t:'],
     },
 
     // instantly redirect when a key is matched
@@ -336,6 +337,7 @@
 </style>
 
 <div class="center">
+  <aside id="help"></aside>
   <time id="clock"></time>
 </div>
 
