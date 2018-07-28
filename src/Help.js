@@ -1,17 +1,9 @@
 import React, {Component} from 'react';
+import HelpStyle from './Help.css'
 import axios from 'axios';
 import App from "./App";
 
 class Help extends Component {
-    componentDidMount() {
-    }
-    props = {
-        commands: {}
-    }
-    state = {
-        categories: []
-    }
-
     /*
         toggle(show) {
             this._toggled = (typeof show !== 'undefined') ? show : !this._toggled;
@@ -76,19 +68,28 @@ class Help extends Component {
             <aside id="help">
                     <ul className="categories">
                     {
-                        this.props.shortcuts.map((shortcut) => (
-                            <li class="category">
-                                <h2 class="category-name">{shortcut.category}</h2>
+                        this.props.shortcuts.map((shortcut, index) => (
+                            <li className="category" key={index}>
+                                <h2 className="category-name">{shortcut.category}</h2>
                                 <ul>
                                     {
-                                        shortcut.commands.map((command) => (
-                                            <li>
-                                                <a href={command.url} target="_blank" >
-                                                    <span className="command-key">{command.key}</span>
-                                                    <span className="command-name">{command.name}</span>
-                                                </a>
-                                            </li>
-                                        ))
+                                        shortcut.commands.map((command, index2) => {
+                                            let keyStyle = {
+                                                backgroundColor: command.color
+                                            };
+                                            let commandStyle = {
+                                                color: this.props.searchTerm.startsWith(command.key) ? command.color: 'black'
+                                            };
+
+                                            return (
+                                                <li key={index2}>
+                                                        <a href={command.url} target="_blank">
+                                                            <span className="command-key" style={keyStyle}>{command.key}</span>
+                                                            <span className="command-name" style={commandStyle}>{command.name}</span>
+                                                        </a>
+                                                    </li>
+                                            )
+                                        })
                                     }
                                 </ul>
                             </li>

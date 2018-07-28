@@ -64,7 +64,7 @@ class Buscador extends Component{
         return(
             <div>
                 <p className="center" id="buscador">
-                    <input type="search" placeholder="buscador"/>
+                    <input type="search" placeholder="buscador" value={this.props.searchTerm}/>
                 </p>
             </div>
         );

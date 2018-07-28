@@ -178,17 +178,59 @@ const CONFIG = {
     // to typing "hamsters" and pressing enter
 };
 
+const ESCAPE_KEY = 27;
+const SUPR_KEY = 127;
+const BACKTRACK_KEY = 8;
+
 class App extends Component {
+    onKeyDown = (event) => {
+        switch( event.keyCode ) {
+            case ESCAPE_KEY:
+                this.setState({keyPressed: false, key: '', searchTerm: ''});
+            break;
+            case BACKTRACK_KEY:
+                this.setState({keyPressed: true, key: event.keyCode, searchTerm: this.state.searchTerm.slice(0, -1) })
+                break;
+            default:
+            break;
+        }
+    }
+    onKeyPress = (event) => {
+        switch( event.keyCode ) {
+            case SUPR_KEY:
+                break;
+            default:
+                this.setState({keyPressed: true, key: event.keyCode, searchTerm: this.state.searchTerm + String.fromCharCode(event.keyCode) })
+                break;
+        }
+    }
+
+    componentWillMount = () => {
+        document.addEventListener("keydown", this.onKeyDown);
+        document.addEventListener("keypress", this.onKeyPress);
+    }
+
+
+    componentWillUnmount = () => {
+        document.removeEventListener("keydown", this.onKeyDown);
+        document.removeEventListener("keypress", this.onKeyPress);
+    }
+
+    state = {
+        keyPressed: false,
+        key: '',
+        searchTerm: ''
+    }
     render() {
         return (
             <div className="App">
                 <header className="App-header">
                     <img src={logo} className="App-logo" alt="logo"/>
-                    <h1 className="App-title">Emolla homepage</h1>
+                    <h1 className="App-title">Emolla</h1>
                 </header>
                 <div className="App-intro center">
-                    <Help shortcuts={CONFIG.shortcuts}/>
-                    <Clock time="1:22" date="28/12/345"/>
+                    <Help shortcuts={CONFIG.shortcuts} searchTerm={this.state.searchTerm}/>
+                    { this.state.keyPressed == false ? <Clock/> : <Buscador searchTerm={this.state.searchTerm}/> }
                 </div>
             </div>
         );

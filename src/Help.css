@@ -5,3 +5,105 @@
     font-size: 1.3rem;
     z-index: 1;
 }
+
+.category {
+    margin-bottom: 2rem;
+}
+
+.category:last-of-type {
+    margin-bottom: 0;
+}
+
+.category-name {
+    margin: 0 0 2rem;
+    font-size: .7em;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+}
+
+.command a {
+    display: block;
+    position: relative;
+    margin: 1em 0;
+    font-size: .9em;
+    line-height: 2em;
+    text-decoration: none;
+}
+
+.command:last-of-type a {
+    margin-bottom: 0;
+}
+
+.command-key {
+    display: block;
+    float: left;
+    width: 2.5em;
+    margin-right: 1em;
+    border-radius: 50%;
+    background-color: #222;
+    color: #fff;
+    font-size: .8em;
+    text-align: center;
+}
+
+.command-name {
+    position: relative;
+    overflow: hidden;
+}
+
+.command-name::after {
+    content: ' ';
+    position: absolute;
+    right: 0;
+    bottom: -.35em;
+    left: 0;
+    height: 2px;
+    transition: .2s;
+    transform: translateX(-2em);
+    background-color: #222;
+    opacity: 0;
+}
+
+.command a:hover .command-name::after,
+.command a:focus .command-name::after {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+@media (min-width: 500px) {
+    .categories {
+        display: grid;
+        grid-template-columns: 250px 185px;
+        justify-content: space-around;
+    }
+
+    .category:nth-last-child(2) {
+        margin-bottom: 0;
+    }
+
+    #search-input,
+    #search-input:focus {
+        font-size: 3em;
+    }
+}
+
+@media (min-width: 1000px) {
+    #help {
+        display: flex;
+        padding: 0;
+    }
+
+    .category {
+        margin: 2rem 0;
+    }
+
+    .categories {
+        grid-template-columns: repeat(2, 300px) 185px;
+    }
+}
+
+@media (min-width: 1700px) {
+    .categories {
+        grid-template-columns: repeat(5, 250px) 185px;
+    }
+}

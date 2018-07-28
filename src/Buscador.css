@@ -52,4 +52,37 @@ input::placeholder{
     justify-content: center;
 }
 
+.search-suggestion {
+    padding: .7em 1em;
+    white-space: nowrap;
+    font-size: 1.1em;
+    cursor: pointer;
+}
+
+.search-suggestion.highlight {
+    background-color: #fff;
+    color: #222;
+}
+
+.search-suggestion b {
+    position: relative;
+    font-weight: 400;
+}
+
+.search-suggestion b::after {
+    content: ' ';
+    position: absolute;
+    top: 51%;
+    right: 0;
+    left: 0;
+    height: 3px;
+    background-color: #fff;
+    opacity: .8;
+}
+
+.search-suggestion.highlight b::after {
+    opacity: 0;
+}
+
+
 
