@@ -1,0 +1,12 @@
+#clock {
+    display: block;
+    margin-top: -.06em;
+    font-size: 6rem;
+    letter-spacing: .05em;
+    cursor: pointer;
+}
+
+.date {
+    font-size: 0.4em;
+    color: gray;
+}
