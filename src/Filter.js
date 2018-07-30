@@ -9,7 +9,7 @@ class Filter extends Component {
           type="search"
           placeholder="engine filter"
           value={this.props.searchTerm}
-          onChange={this.props.onChangeHandler}
+          onChange={this.props.onChangeFilterTermHandler}
         />
       </div>
     );

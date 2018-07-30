@@ -34,14 +34,14 @@ const CONFIG = {
       commands: [
         {
           name: "Google translate",
-          key: "tg",
+          key: "t",
           url: "https://translate.google.es",
           path: "/?um=1&ie=UTF-8&hl=es&client=tw-ob#en/es/{}",
           color: "#1da1f2"
         },
         {
           name: "Linguee",
-          key: "tl",
+          key: "l",
           url: "https://www.linguee.es",
           path: "/espanol-ingles/search?source=auto&query={}",
           color: "#1df1f2"
@@ -119,6 +119,18 @@ const CONFIG = {
           color: "#cd201f"
         }
       ]
+    },
+    {
+        category: "Programming",
+        commands: [
+            {
+                name: "KeyCode",
+                key: "k",
+                url: "http://keycode.info/",
+                path: "",
+                color: "#cdffff"
+            }
+        ]
     }
   ],
   // give suggestions as you type
@@ -173,6 +185,7 @@ const CONFIG = {
 
 const ESCAPE_KEY = 27;
 const TAB_KEY = 9;
+const INTRO_KEY = 13;
 
 class App extends Component {
   constructor() {
@@ -180,6 +193,7 @@ class App extends Component {
     this.state.numCommands = 0;
     CONFIG.shortcuts.map(shortcut => {
       shortcut.commands.map(command => {
+        command.position = this.state.numCommands;
         this.state.numCommands++;
       });
     });
@@ -187,19 +201,33 @@ class App extends Component {
   onKeyDown = event => {
     switch (event.keyCode) {
       case ESCAPE_KEY:
-        this.setState({ key: "", searchTerm: "" });
+        this.setState({ currentShortcut: {}, pos: -1, key: "", filterTerm: "" });
         break;
       case TAB_KEY:
+        event.preventDefault();
         this.setState({
-          pos: this.state.pos > this.state.numCommands ? 0 : this.state.pos + 1
+          pos:
+            this.state.pos >= this.state.numCommands - 1
+              ? 0
+              : this.state.pos + 1
         });
+        break;
+      case INTRO_KEY:
+        event.preventDefault();
+        if (this.state.pos != -1){
+            this.setShortcutPos(this.state.pos)
+        }
         break;
       default:
         break;
     }
   };
-  onChangeHandler = event => {
-    this.setState({ pos: 0, searchTerm: event.target.value });
+  onChangeFilterTermHandler = event => {
+    this.setState({ pos: 0, filterTerm: event.target.value });
+  };
+
+  onChangeSearchTermHandler = event => {
+      this.setState({ pos: 0, searchTerm: event.target.value });
   };
 
   componentWillMount = () => {
@@ -211,25 +239,49 @@ class App extends Component {
   };
 
   state = {
+    currentShortcut: {},
     key: "",
-    pos: 0,
+    pos: -1,
     numCommands: 0,
+    filterTerm: "",
     searchTerm: ""
   };
+
+  setShortcutPos = (pos) => {
+    let position = 0;
+
+      CONFIG.shortcuts.map(shortcut => {
+          shortcut.commands.map(command => {
+              command.position = this.state.numCommands;
+              if (position == pos){
+                this.setState({currentShortcut: command});
+              }
+              position++;
+          });
+      });
+  }
   render() {
     return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Emolla</h1>
-          <Filter onChangeHandler={this.onChangeHandler} />
+          <Filter onChangeFilterTermHandler={this.onChangeFilterTermHandler} />
         </header>
         <div className="App-intro center">
-          <Help
-            pos={this.state.pos}
-            shortcuts={CONFIG.shortcuts}
-            searchTerm={this.state.searchTerm}
-          />
+          {Object.keys(this.state.currentShortcut).length !== 0 ? (
+            <Buscador
+                key={this.state.key}
+                currentShortcut={this.state.currentShortcut}
+                searchTerm={this.state.searchTerm}
+            />
+          ) : (
+            <Help
+              pos={this.state.pos}
+              shortcuts={CONFIG.shortcuts}
+              filterTerm={this.state.filterTerm}
+            />
+          )}
           <Clock />
         </div>
       </div>

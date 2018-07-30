@@ -1,71 +1,11 @@
 import React, { Component } from "react";
 import HelpStyle from "./Help.css";
-import axios from "axios";
-import App from "./App";
 
 class Help extends Component {
   constructor(props) {
     super();
   }
-  /*
-        toggle(show) {
-            this._toggled = (typeof show !== 'undefined') ? show : !this._toggled;
-            this._toggled ? $.bodyClassAdd('help') : $.bodyClassRemove('help');
-        }
 
-        _bindMethods() {
-            this._handleKeydown = this._handleKeydown.bind(this);
-        }
-
-        _buildAndAppendLists() {
-            const lists = document.createElement('ul');
-            lists.classList.add('categories');
-
-            this._getCategories().forEach(category => {
-                lists.insertAdjacentHTML(
-                    'beforeend',
-                    `<li class="category">
-                <h2 class="category-name">${category}</h2>
-                <ul>${this._buildListCommands(category)}</ul>
-              </li>`
-                );
-            });
-
-            this._el.appendChild(lists);
-        }
-
-        _buildListCommands(category) {
-            return this._commands.map(([cmdCategory, name, key, url]) => {
-                if (cmdCategory === category) {
-                    return (
-                        `<li class="command">
-                  <a href="${url}" target="${this._newTab ? '_blank' : '_self'}">
-                    <span class="command-key">${key}</span>
-                    <span class="comman
-                    d-name">${name}</span>
-                  </a>
-                </li>`
-                    );
-                }
-            }).join('');
-        }
-
-        _getCategories() {
-            const categories = this._commands
-                .map(([category]) => category)
-                .filter(category => category);
-
-            return [...new Set(categories)];
-        }
-
-        _handleKeydown(e) {
-            if ($.key(e) === 'escape') this.toggle(false);
-        }
-
-        _registerEvents() {
-            document.addEventListener('keydown', this._handleKeydown);
-        }
-    */
   render() {
     return (
       <aside id="help">
@@ -76,7 +16,7 @@ class Help extends Component {
                 if (
                   command.name
                     .toLowerCase()
-                    .indexOf(this.props.searchTerm.toLowerCase()) >= 0
+                    .indexOf(this.props.filterTerm.toLowerCase()) >= 0
                 ) {
                   return true;
                 }
@@ -95,19 +35,23 @@ class Help extends Component {
                     };
                     let commandStyle = {
                       backgroundColor:
-                        this.props.pos == index + index2
+                        this.props.pos == command.position
                           ? command.color
                           : "white"
                     };
+                    let tip = this.props.pos == command.position ? "Press intro to expand!":"";
 
                     return (
-                      <li key={index2}>
+                      <li className="command" key={index2}>
                         <a href={command.url} target="_blank">
                           <span className="command-key" style={keyStyle}>
                             {command.key}
                           </span>
                           <span className="command-name" style={commandStyle}>
                             {command.name}
+                          </span>
+                          <span>
+                            <code className="small"> {tip} </code>
                           </span>
                         </a>
                       </li>
