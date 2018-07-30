@@ -9,7 +9,7 @@
     margin: 0;
     border: 0;
     outline: 0;
-    background: gray;
+    background: transparent;
     color: #fff;
     font-family: Lato, sans-serif;
     text-align: center;
@@ -21,15 +21,15 @@
 
 }
 
-#search-form {
-    padding: 1em;
+#buscador {
+    padding: 2em;
     background: #111;
     transition: background-color .5s;
     box-sizing: border-box;
     z-index: 2;
 }
 
-#search-form>div {
+#buscador>div {
     width: 100%;
 }
 

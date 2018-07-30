@@ -266,14 +266,17 @@ class App extends Component {
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Emolla</h1>
-          <Filter onChangeFilterTermHandler={this.onChangeFilterTermHandler} />
+          <Filter
+              currentShortcut={this.state.currentShortcut}
+              onChangeFilterTermHandler={this.onChangeFilterTermHandler} />
         </header>
         <div className="App-intro center">
           {Object.keys(this.state.currentShortcut).length !== 0 ? (
             <Buscador
                 key={this.state.key}
-                currentShortcut={this.state.currentShortcut}
                 searchTerm={this.state.searchTerm}
+                currentShortcut={this.state.currentShortcut}
+                onChangeSearchTermHandler={this.onChangeSearchTermHandler}
             />
           ) : (
             <Help
