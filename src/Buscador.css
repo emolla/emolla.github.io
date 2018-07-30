@@ -1,10 +1,7 @@
-#buscador{
-}
-
-input,
-button,
-input:focus,
-button:focus {
+#buscador input,
+#buscador button,
+#buscador input:focus,
+#buscador button:focus {
     font-size: 2em;
     display: block;
     box-sizing: border-box;
@@ -20,7 +17,7 @@ button:focus {
     -moz-appearance: none;
     padding: 0.5em;
 }
-input::placeholder{
+#buscador input::placeholder{
 
 }
 

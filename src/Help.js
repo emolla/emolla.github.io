@@ -1,10 +1,13 @@
-import React, {Component} from 'react';
-import HelpStyle from './Help.css'
-import axios from 'axios';
+import React, { Component } from "react";
+import HelpStyle from "./Help.css";
+import axios from "axios";
 import App from "./App";
 
 class Help extends Component {
-    /*
+  constructor(props) {
+    super();
+  }
+  /*
         toggle(show) {
             this._toggled = (typeof show !== 'undefined') ? show : !this._toggled;
             this._toggled ? $.bodyClassAdd('help') : $.bodyClassRemove('help');
@@ -63,42 +66,60 @@ class Help extends Component {
             document.addEventListener('keydown', this._handleKeydown);
         }
     */
-    render() {
-        return (
-            <aside id="help">
-                    <ul className="categories">
-                    {
-                        this.props.shortcuts.map((shortcut, index) => (
-                            <li className="category" key={index}>
-                                <h2 className="category-name">{shortcut.category}</h2>
-                                <ul>
-                                    {
-                                        shortcut.commands.map((command, index2) => {
-                                            let keyStyle = {
-                                                backgroundColor: command.color
-                                            };
-                                            let commandStyle = {
-                                                color: this.props.searchTerm.startsWith(command.key) ? command.color: 'black'
-                                            };
+  render() {
+    return (
+      <aside id="help">
+        <ul className="categories">
+          {this.props.shortcuts
+            .filter(shortcut => {
+              let commands = shortcut.commands.filter(command => {
+                if (
+                  command.name
+                    .toLowerCase()
+                    .indexOf(this.props.searchTerm.toLowerCase()) >= 0
+                ) {
+                  return true;
+                }
+              });
+              if (commands.length > 0) {
+                return true;
+              }
+            })
+            .map((shortcut, index) => (
+              <li className="category" key={index}>
+                <h2 className="category-name">{shortcut.category}</h2>
+                <ul>
+                  {shortcut.commands.map((command, index2) => {
+                    let keyStyle = {
+                      backgroundColor: command.color
+                    };
+                    let commandStyle = {
+                      backgroundColor:
+                        this.props.pos == index + index2
+                          ? command.color
+                          : "white"
+                    };
 
-                                            return (
-                                                <li key={index2}>
-                                                        <a href={command.url} target="_blank">
-                                                            <span className="command-key" style={keyStyle}>{command.key}</span>
-                                                            <span className="command-name" style={commandStyle}>{command.name}</span>
-                                                        </a>
-                                                    </li>
-                                            )
-                                        })
-                                    }
-                                </ul>
-                            </li>
-                        ))
-                    }
-                    </ul>
-                </aside>
-        );
-    }
+                    return (
+                      <li key={index2}>
+                        <a href={command.url} target="_blank">
+                          <span className="command-key" style={keyStyle}>
+                            {command.key}
+                          </span>
+                          <span className="command-name" style={commandStyle}>
+                            {command.name}
+                          </span>
+                        </a>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </li>
+            ))}
+        </ul>
+      </aside>
+    );
+  }
 }
 
 export default Help;

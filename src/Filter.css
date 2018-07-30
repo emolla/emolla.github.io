@@ -1,0 +1,35 @@
+#filter {
+    padding: 1em;
+    background: #111;
+    transition: background-color .5s;
+    box-sizing: border-box;
+    z-index: 2;
+    margin-bottom: 2em;
+    padding-bottom: 2em;
+}
+
+#filter input{
+    font-weight: bold;
+    font-size: 2em;
+    background-color: transparent;
+    color: #fff;
+    outline: 0;
+    outline-style: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: solid #fff 2px;
+    padding: 3px 5px;
+}
+
+#filter input::placeholder{
+    text-align: center;
+}
+
+input::-webkit-input-placeholder {
+    text-align: center;
+}
+
+input:-moz-placeholder {
+    text-align: center;
+}
