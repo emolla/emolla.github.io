@@ -4,8 +4,6 @@
     transition: background-color .5s;
     box-sizing: border-box;
     z-index: 2;
-    margin-bottom: 2em;
-    padding-bottom: 2em;
 }
 
 #filter input{

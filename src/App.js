@@ -5,6 +5,7 @@ import Buscador from "./Buscador";
 import AppStyle from "./App.css";
 import Clock from "./Clock";
 import Filter from "./Filter";
+import Header from "./Header";
 
 const CONFIG = {
   shortcuts: [
@@ -94,7 +95,7 @@ const CONFIG = {
       key: "k",
       url: "http://keycode.info/",
       path: "",
-      color: "#cdffff"
+      color: "#00f0ff"
     }
   ],
   // give suggestions as you type
@@ -180,13 +181,11 @@ class App extends Component {
         break;
       case INTRO_KEY:
         event.preventDefault();
-        if (this.state.searchTerm.length > 0) {
-          this.doSearch();
-        }
+        this.doSearch();
         break;
-        case SHIFT_KEY:
+      case SHIFT_KEY:
         event.preventDefault();
-        this.setState({focusOnFilter: !this.state.focusOnFilter});
+        this.setState({ focusOnFilter: !this.state.focusOnFilter });
         break;
       default:
         break;
@@ -238,15 +237,12 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Emolla</h1>
-          <Filter
-            focusOnFilter={this.state.focusOnFilter}
-            shortcuts={this.state.shortcuts}
-            onChangeFilterTermHandler={this.onChangeFilterTermHandler}
-          />
-        </header>
+        <Filter
+          focusOnFilter={this.state.focusOnFilter}
+          shortcuts={this.state.shortcuts}
+          onChangeFilterTermHandler={this.onChangeFilterTermHandler}
+        />
+
         <div className="App-intro center">
           <Help
             pos={this.state.pos}

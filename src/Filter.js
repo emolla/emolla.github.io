@@ -16,7 +16,7 @@ class Filter extends Component {
       <div id="filter">
         <input
           type="search"
-          autofocus={this.props.focusOnFilter}
+          autoFocus={this.props.focusOnFilter}
           placeholder="engine filter"
           value={this.props.filterTerm}
           onChange={this.props.onChangeFilterTermHandler}

@@ -13,7 +13,7 @@ class Buscador extends Component {
         <p className="center" id="buscador">
           <input
             type="search"
-            autofocus={this.props.focusOnFilter}
+            autoFocus={this.props.focusOnFilter}
             value={this.props.searchTerm}
             placeholder="Search"
             onChange={this.props.onChangeSearchTermHandler}

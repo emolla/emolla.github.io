@@ -64,7 +64,13 @@
             -2px -2px white;
 }
 
+@keyframes commandkey-spin{
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
 .command-key.current{
+    animation: App-logo-spin infinite 1s linear;
     font-weight: bold;
 }
 .command a:hover .command-name::after,
