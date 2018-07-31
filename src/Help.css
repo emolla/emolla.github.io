@@ -51,21 +51,24 @@
     overflow: hidden;
 }
 
-.command-name::after {
-    content: ' ';
-    position: absolute;
-    right: 0;
-    bottom: -.35em;
-    left: 0;
-    height: 2px;
-    transition: .2s;
-    transform: translateX(-2em);
-    background-color: #222;
-    opacity: 0;
+.command-name::after,
+.command-name.current{
+    font-weight: bold;
+    border-bottom: 2px solid currentColor;
+    display: inline-block;
+    line-height: 0.85;
+    text-shadow:
+            2px 2px white,
+            2px -2px white,
+            -2px 2px white,
+            -2px -2px white;
 }
 
+.command-key.current{
+    font-weight: bold;
+}
 .command a:hover .command-name::after,
-.command a:focus .command-name::after {
+.command a:focus .command-name::after{
     transform: translateX(0);
     opacity: 1;
 }

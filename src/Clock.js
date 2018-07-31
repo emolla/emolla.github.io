@@ -4,7 +4,6 @@ import ClockStyle from "./Clock.css";
 class Clock extends Component {
   constructor(props) {
     super(props);
-    let date = new Date();
 
     this.state = this.getTime();
   }
@@ -30,7 +29,6 @@ class Clock extends Component {
     };
   };
   tick() {
-    let date = new Date();
     this.setState(this.getTime());
   }
   render() {

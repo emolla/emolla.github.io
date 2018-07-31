@@ -7,130 +7,94 @@ import Clock from "./Clock";
 import Filter from "./Filter";
 
 const CONFIG = {
-  // the category, name, key, url, search path and color
-  // if none of the specified keys are matched, the '*' key is used
   shortcuts: [
     {
+      name: "Google",
       category: "Search",
-      commands: [
-        {
-          name: "Google",
-          key: "*",
-          url: "https://www.google.com",
-          path: "/search?q={}",
-          color: "#111"
-        },
-        {
-          name: "Duckduckgo",
-          key: "s",
-          url: "https://duckduckgo.com/",
-          path: "/search?q={}&ia=meanings",
-          color: "#222"
-        }
-      ]
+      key: "*",
+      url: "https://www.google.com",
+      path: "/search?q={}",
+      color: "#111"
     },
     {
+      name: "Duckduckgo",
+      category: "Search",
+      key: "s",
+      url: "https://duckduckgo.com/",
+      path: "/search?q={}&ia=meanings",
+      color: "#222"
+    },
+    {
+      name: "Google translate",
       category: "translator",
-      commands: [
-        {
-          name: "Google translate",
-          key: "t",
-          url: "https://translate.google.es",
-          path: "/?um=1&ie=UTF-8&hl=es&client=tw-ob#en/es/{}",
-          color: "#1da1f2"
-        },
-        {
-          name: "Linguee",
-          key: "l",
-          url: "https://www.linguee.es",
-          path: "/espanol-ingles/search?source=auto&query={}",
-          color: "#1df1f2"
-        }
-      ]
+      key: "t",
+      url: "https://translate.google.es",
+      path: "/?um=1&ie=UTF-8&hl=es&client=tw-ob#en/es/{}",
+      color: "#1da1f2"
     },
     {
+      name: "Linguee",
+      category: "translator",
+      key: "l",
+      url: "https://www.linguee.es",
+      path: "/espanol-ingles/search?source=auto&query={}",
+      color: "#1df1f2"
+    },
+    {
+      name: "GitHub",
       category: "Developing",
-      commands: [
-        {
-          name: "GitHub",
-          key: "g",
-          url: "https://github.com/emolla",
-          path: "/search?utf8=✓&q={}&type=",
-          color: "#333"
-        }
-      ]
+      key: "g",
+      url: "https://github.com/emolla",
+      path: "/search?utf8=✓&q={}&type=",
+      color: "#333"
     },
     {
+      name: "Gmail Inbox",
       category: "Mail",
-      commands: [
-        {
-          name: "Gmail Inbox",
-          key: "i",
-          url: "https://www.google.com",
-          path: "/search/{}",
-          color: "#4285f4"
-        }
-      ]
+      key: "i",
+      url: "https://www.google.com",
+      path: "/search/{}",
+      color: "#4285f4"
     },
     {
+      name: "BBCNews",
       category: "News",
-      commands: [
-        {
-          name: "BBCNews",
-          key: "b",
-          url: "https://bbc.co.uk/news",
-          path: "/search?q={}",
-          color: "#da552f"
-        }
-      ]
+      key: "b",
+      url: "https://bbc.co.uk/news",
+      path: "/search?q={}",
+      color: "#da552f"
     },
     {
+      name: "Ivoox",
       category: "Listen",
-      commands: [
-        {
-          name: "Ivoox",
-          key: "x",
-          url: "https://ivoox.com",
-          path: "/{}_sb.html",
-          color: "#ff8800"
-        }
-      ]
+      key: "x",
+      url: "https://ivoox.com",
+      path: "/{}_sb.html",
+      color: "#ff8800"
     },
     {
+      name: "Linkedin",
       category: "Jobs",
-      commands: [
-        {
-          name: "Linkedin",
-          key: "l",
-          url: "https://www.linkedin.com",
-          path: "/in/enrique-moll%C3%A1/",
-          color: "#9cb443"
-        }
-      ]
+      key: "l",
+      url: "https://www.linkedin.com",
+      path: "/in/enrique-moll%C3%A1/",
+      color: "#9cb443"
     },
     {
+      name: "YouTube",
       category: "Watch",
-      commands: [
-        {
-          name: "YouTube",
-          key: "y",
-          url: "https://youtube.com/feed/subscriptions",
-          path: "/results?search_query={}",
-          color: "#cd201f"
-        }
-      ]
+      key: "y",
+      url: "https://youtube.com/feed/subscriptions",
+      path: "/results?search_query={}",
+      color: "#cd201f"
     },
     {
-        category: "Programming",
-        commands: [
-            {
-                name: "KeyCode",
-                key: "k",
-                url: "http://keycode.info/",
-                path: "",
-                color: "#cdffff"
-            }
-        ]
+      name: "KeyCode",
+      category: "Programming",
+      key: "k",
+      url: "http://keycode.info/",
+      path: "",
+      color: "#cdffff"
     }
   ],
   // give suggestions as you type
@@ -185,49 +149,63 @@ const CONFIG = {
 
 const ESCAPE_KEY = 27;
 const TAB_KEY = 9;
+const SHIFT_KEY = 16;
 const INTRO_KEY = 13;
 
 class App extends Component {
   constructor() {
     super();
-    this.state.numCommands = 0;
-    CONFIG.shortcuts.map(shortcut => {
-      shortcut.commands.map(command => {
-        command.position = this.state.numCommands;
-        this.state.numCommands++;
-      });
-    });
+    this.state.shortcuts = CONFIG.shortcuts;
+    this.state.pos = 0;
+    this.state.focusOnFilter = true;
   }
+
   onKeyDown = event => {
     switch (event.keyCode) {
       case ESCAPE_KEY:
-        this.setState({ currentShortcut: {}, pos: -1, key: "", filterTerm: "" });
+        this.setState({
+          pos: -1,
+          filterTerm: "",
+          searchTerm: ""
+        });
         break;
       case TAB_KEY:
         event.preventDefault();
         this.setState({
           pos:
-            this.state.pos >= this.state.numCommands - 1
+            this.state.pos >= this.state.shortcuts.length - 1
               ? 0
               : this.state.pos + 1
         });
         break;
       case INTRO_KEY:
         event.preventDefault();
-        if (this.state.pos != -1){
-            this.setShortcutPos(this.state.pos)
+        if (this.state.searchTerm.length > 0) {
+          this.doSearch();
         }
+        break;
+        case SHIFT_KEY:
+        event.preventDefault();
+        this.setState({focusOnFilter: !this.state.focusOnFilter});
         break;
       default:
         break;
     }
   };
+  doSearch = () => {
+    let path = this.state.shortcuts[this.state.pos].path.replace(
+      "{}",
+      this.state.searchTerm
+    );
+    window.open(this.state.shortcuts[this.state.pos].url + path, "_blank");
+  };
   onChangeFilterTermHandler = event => {
     this.setState({ pos: 0, filterTerm: event.target.value });
+    this.filterShortcuts(event.target.value);
   };
 
   onChangeSearchTermHandler = event => {
-      this.setState({ pos: 0, searchTerm: event.target.value });
+    this.setState({ pos: 0, searchTerm: event.target.value });
   };
 
   componentWillMount = () => {
@@ -239,27 +217,24 @@ class App extends Component {
   };
 
   state = {
-    currentShortcut: {},
-    key: "",
-    pos: -1,
-    numCommands: 0,
+    shortcuts: [],
+    pos: 0,
     filterTerm: "",
     searchTerm: ""
   };
 
-  setShortcutPos = (pos) => {
-    let position = 0;
+  filterShortcuts = filterTerm => {
+    this.setState({
+      shortcuts: CONFIG.shortcuts.filter(shortcut => {
+        if (
+          shortcut.name.toLowerCase().indexOf(filterTerm.toLowerCase()) >= 0
+        ) {
+          return true;
+        }
+      })
+    });
+  };
 
-      CONFIG.shortcuts.map(shortcut => {
-          shortcut.commands.map(command => {
-              command.position = this.state.numCommands;
-              if (position == pos){
-                this.setState({currentShortcut: command});
-              }
-              position++;
-          });
-      });
-  }
   render() {
     return (
       <div className="App">
@@ -267,25 +242,26 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Emolla</h1>
           <Filter
-              currentShortcut={this.state.currentShortcut}
-              onChangeFilterTermHandler={this.onChangeFilterTermHandler} />
+            focusOnFilter={this.state.focusOnFilter}
+            shortcuts={this.state.shortcuts}
+            onChangeFilterTermHandler={this.onChangeFilterTermHandler}
+          />
         </header>
         <div className="App-intro center">
-          {Object.keys(this.state.currentShortcut).length !== 0 ? (
-            <Buscador
-                key={this.state.key}
-                searchTerm={this.state.searchTerm}
-                currentShortcut={this.state.currentShortcut}
-                onChangeSearchTermHandler={this.onChangeSearchTermHandler}
-            />
-          ) : (
-            <Help
-              pos={this.state.pos}
-              shortcuts={CONFIG.shortcuts}
-              filterTerm={this.state.filterTerm}
-            />
-          )}
+          <Help
+            pos={this.state.pos}
+            filterTerm={this.state.filterTerm}
+            shortcuts={this.state.shortcuts}
+          />
           <Clock />
+        </div>
+        <div>
+          <Buscador
+            focusOnFilter={this.state.focusOnFilter}
+            pos={this.state.pos}
+            searchTerm={this.state.searchTerm}
+            onChangeSearchTermHandler={this.onChangeSearchTermHandler}
+          />
         </div>
       </div>
     );

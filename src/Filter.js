@@ -5,19 +5,23 @@ class Filter extends Component {
   constructor(props) {
     super();
   }
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.focusOnFilter) {
+      this._input.focus();
+    }
+  }
+
   render() {
     return (
       <div id="filter">
-        {Object.keys(this.props.currentShortcut).length !== 0 ? (
-          <h2>{this.props.currentShortcut.name}</h2>
-        ) : (
-          <input
-            type="search"
-            placeholder="engine filter"
-            value={this.props.filterTerm}
-            onChange={this.props.onChangeFilterTermHandler}
-          />
-        )}
+        <input
+          type="search"
+          autofocus={this.props.focusOnFilter}
+          placeholder="engine filter"
+          value={this.props.filterTerm}
+          onChange={this.props.onChangeFilterTermHandler}
+          ref={c => (this._input = c)}
+        />
       </div>
     );
   }
