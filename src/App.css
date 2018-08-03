@@ -84,3 +84,13 @@ body.form #search-form.overlay {
   height: 100%;
   box-sizing: border-box;
 }
+
+.left {
+  float: left;
+  width: 70%;
+}
+
+.right {
+  float: right;
+  width: 30%;
+}

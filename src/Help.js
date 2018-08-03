@@ -49,7 +49,7 @@ class Help extends Component {
                   ))}
             </li>
             <li className="category" key="1">
-                <h2 className="category-name">From cookies</h2>
+                <h2 className="category-name">Other</h2>
             </li>
         </ul>
       </aside>

@@ -1,7 +1,9 @@
 #clock {
     display: block;
+    text-align: right;
+    color: rgba(207, 0, 3, 0.58);
     margin-top: -.06em;
-    font-size: 5rem;
+    font-size: 3rem;
     letter-spacing: .05em;
     cursor: pointer;
     padding-left: 1em;
@@ -10,6 +12,7 @@
 .date {
     font-size: 0.8em;
     color: gray;
+    text-align: right;
 }
 
 .seconds{

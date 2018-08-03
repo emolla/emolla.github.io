@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Unsplash from 'unsplash-js';
 import logo from "./logo.svg";
 import Help from "./Help";
 import Buscador from "./Buscador";
@@ -148,6 +149,12 @@ const CONFIG = {
   // to typing "hamsters" and pressing enter
 };
 
+const unsplash = new Unsplash({
+    applicationId: "{a2ebab846510710a90175717ba17697a456464da77bba71a5867e997606915f8}",
+    secret: "{829b4b4a4483f9f77140ddb381ee1cb93266e1ffcffa60c92d9d7e7d0c545146}",
+    callbackUrl: "{http://localhost:3000}"
+});
+
 const ESCAPE_KEY = 27;
 const TAB_KEY = 9;
 const SHIFT_KEY = 16;
@@ -156,6 +163,13 @@ const INTRO_KEY = 13;
 class App extends Component {
   constructor() {
     super();
+
+
+      unsplash.photos.getRandomPhoto({ username: "emolla" })
+          .then((data) => {console.log(data)})
+          .then(json => {
+              console.log(json)
+          });
     this.state.shortcuts = CONFIG.shortcuts;
     this.state.pos = 0;
     this.state.focusOnFilter = true;
@@ -249,7 +263,6 @@ class App extends Component {
             filterTerm={this.state.filterTerm}
             shortcuts={this.state.shortcuts}
           />
-          <Clock />
         </div>
         <div>
           <Buscador
